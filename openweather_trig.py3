@@ -18,19 +18,26 @@ ow_long = 10
 ow_url  = "http://api.openweathermap.org/data/3.0/triggers?appid=" + ow_appid
 parser = argparse.ArgumentParser(description=' trigger tool for openweatermap by Christoph Schultz')
 parser.add_argument('action')
-parser.add_argument('id', default=False)
-parser.add_argument('start')
-parser.add_argument('end')
-
 args = parser.parse_args()
-t_start = args.start
-t_end = args.end
 if args.action == "register":
+   name = input("Trigger Ereignis:(temp,wind_speed,wind_dir, humidity, pressure, clouds)")
+   begin = eval input("Beginn:[vor|in,x ](Tagen)"))
+   end = eval (input("Ende: [vor|in,x] (Tagen) Ende > Beginn"))
+   if begin[0] == "vor":
+      start_exp = "before"
+   else:
+      start_exp = "after"
    
-   trig_start = 604800
-   trig_end = 640800
+   if end[0] == "vor":
+      end_exp = "before"
+   else:
+      end_exp = "after"
+        
+   
+   trig_start = begin[1]*24*60*60
+   trig_end = end[1]*24*60*60
    #print(trig_start, trig_end)
-   ow_post_data = { 'time_period':{'start':{'expression':'before', 'amount': trig_start },'end':{'expression':'after','amount':  trig_end }},'condition':[{'name': 'wind_speed','expression':'$gt','amount': 70}],
+   ow_post_data = { 'time_period':{'start':{'expression':start_exp, 'amount': trig_start },'end':{'expression':end_exp,'amount':  trig_end }},'conditions':[{'name': name,'expression':'$gt','amount': 70}],
    'area':[{'type':'Point','coordinates':[ 52 ,  10 ]}]}
    print(ow_post_data)
    print(json.dumps(ow_post_data).encode('utf-8'))
@@ -38,3 +45,10 @@ if args.action == "register":
    res = req.data
    
    print(res)
+elif args.action == "alter":
+   id=input("trigger_id:")
+   ow_put_url = "http://api.openweathermap.org/data/3.0/triggers/" + id + "&appid=" + ow_appid
+   ow_put_data = {'time_period':{'start':{'expression':start_exp, 'amount':trig_start}, 'end':{'expression':end_exp, 'amount':trig_end}},'contitions'[{'name': name1, 'expression':'$gt', 'amount':amnt1},{'name':name2,'expression':'$gt','amount':amnt2} ],
+   'area':[{'type': 'Point','coordinates':[lat,lon]}]}
+   
+   req = pool.request("PUT", 
