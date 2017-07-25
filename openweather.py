@@ -62,7 +62,7 @@ def wind_deg2txt(deg):
     return(wind_dir_txt)
 	
 #--------------------------------------------------------------------------------------
-def strongth_mps2bft(speed_mps)
+def strongth_mps2bft(speed_mps):
     speed_ms =round(speed_mps * 0.44704,1)
 	if speed_ms < 0.3: 
 	   strongth_bft = 0
