@@ -64,43 +64,43 @@ def wind_deg2txt(deg):
 #--------------------------------------------------------------------------------------
 def strongth_mps2bft(speed_mps):
     speed_ms =round(speed_mps * 0.44704,1)
-	if speed_ms < 0.3: 
-	   strongth_bft = 0
-	elif speed_ms >= 0.3 && speed_ms < 1.6:
-	   strongth_bft = 1
-	elif speed_ms >= 1.6 && speed_ms < 3.4:
-	   strongth_bft = 2
-	elif speed_ms >= 3.4 && speed_ms < 5.5:
-	   strongth_bft = 3
-	elif speed_ms >= 5.5 && speed_ms < 8.0:
-	   strongth_bft = 4
-	elif speed_ms >= 8.0 && speed_ms < 10.8:
-	   strongth_bft = 5
-	elif speed_ms >= 10.8 && speed_ms < 13.9:
-	   strongth_bft = 6
-	elif speed_ms >= 13.9 && speed_ms < 17.2:
-	   strongth_bft = 7
-	elif speed_ms >= 17.2 && speed_ms < 20.8:
-	   strongth_bft = 8
-	elif speed_ms >= 20.8 && speed_ms < 24.5:
-	   strongth_bft = 9
-	elif speed_ms >= 24.5 && speed_ms < 28.5:
-	   strongth_bft = 10
-    elif speed_ms >= 28.5 && speed_ms < 32.7:
-	   strongth_bft = 11
-	elif speed_ms >= 32.7 && speed_ms < 36.9:
-	   strongth_bft = 12
-	elif speed_ms >= 36.9 && speed_ms < 41.4:
-	   strongth_bft = 13
-	elif speed_ms >= 41.4 && speed_ms < 46.1:
-	   strongth_bft = 14
-	elif speed_ms >= 46.1 && speed_ms < 50.8:
-	   strongth_bft = 15
-	elif speed_ms >= 50.8 && speed_ms < 56.1:
-	   strongth_bft = 16
-	else: strongth_bft = 17
-	return(strongth_bft)
-	---------------------------------------------------------------------------------------------
+    if speed_ms < 0.3:
+       strongth_bft = 0
+    elif speed_ms >= 0.3 and speed_ms < 1.6:
+       strongth_bft = 1
+    elif speed_ms >= 1.6 and speed_ms < 3.4:
+       strongth_bft = 2
+    elif speed_ms >= 3.4 and speed_ms < 5.5:
+       strongth_bft = 3
+    elif speed_ms >= 5.5 and speed_ms < 8.0:
+       strongth_bft = 4
+    elif speed_ms >= 8.0 and speed_ms < 10.8:
+       strongth_bft = 5
+    elif speed_ms >= 10.8 and speed_ms < 13.9:
+       strongth_bft = 6
+    elif speed_ms >= 13.9 and speed_ms < 17.2:
+       strongth_bft = 7
+    elif speed_ms >= 17.2 and speed_ms < 20.8:
+       strongth_bft = 8
+    elif speed_ms >= 20.8 and speed_ms < 24.5:
+       strongth_bft = 9
+    elif speed_ms >= 24.5 and speed_ms < 28.5:
+       strongth_bft = 10
+    elif speed_ms >= 28.5 and speed_ms < 32.7:
+       strongth_bft = 11
+    elif speed_ms >= 32.7 and speed_ms < 36.9:
+       strongth_bft = 12
+    elif speed_ms >= 36.9 and speed_ms < 41.4:
+       strongth_bft = 13
+    elif speed_ms >= 41.4 and speed_ms < 46.1:
+       strongth_bft = 14
+    elif speed_ms >= 46.1 and speed_ms < 50.8:
+       strongth_bft = 15
+    elif speed_ms >= 50.8 and speed_ms < 56.1:
+       strongth_bft = 16
+    else: strongth_bft = 17
+    return(strongth_bft)
+#----------------------------------------------------------------------------------------------------
 if __name__ == "__main__":
  
    pp = pprint.PrettyPrinter(indent=4)
@@ -145,8 +145,8 @@ if __name__ == "__main__":
    print "Stand       : " + status
    print "Windrichtung: " + str(json_out_cur['wind']['deg']) + " Grad"
    wind_speed = json_out_cur['wind']['speed']
-   wind_speed = speed_mps2ms(wind_speed)
-   print "Windgeschw. : " + str(wind_speed) + " m/s"
+   wind_speed = strongth_mps2bft(wind_speed)
+   print "Windgeschw. : " + str(wind_speed) + " bfts"
    print "Wolken      : " + str(json_out_cur['clouds']['all']) + "%"
    print "Himmel      : " + str(json_out_cur['weather'][0]['description']) + ""
    print "owIcon      : " + str(json_out_cur['weather'][0]['icon']) + ""
@@ -187,8 +187,8 @@ if __name__ == "__main__":
    print "Stadt       : " + str(json_out_for['city']['name'])
    print "Einträge    : " + str(json_out_for['cnt'])
    count =  json_out_for['cnt']
-   #      2013-06-28 18:00:00  12.6 Grad  11.6 Grad  12.6 Grad  100%  1010hPa 355 Grad  NNW   
-   print "Zeit                 Temp       Temp.min   Temp.max"
+   #      2013-06-28 18:00:00  12.6 Grad  11.6 Grad  12.6 Grad  100%  1010hPa  355 Grad  NNW  14 bfts  100%  10d  100  Clouds broken clouds
+   print "Zeit                 Temp       Temp.min   Temp.max  Feucht Druck   Windrichtung   WGeschw  Bewöl  owIconID  Beschreibung"
    for x in range(1,count):
        cur_stamp = json_out_for['list'][x]['dt_txt']
        cur_date = cur_stamp[0:10]
@@ -212,7 +212,7 @@ if __name__ == "__main__":
        wind_richtung =  wind_deg2txt(json_out_for['list'][x]['wind']['deg'])
        print " " + wind_richtung + "",
        wind_speed = json_out_for['list'][x]['wind']['speed']
-       wind_speed = speed_mps2bft(wind_speed)
+       wind_speed = strongth_mps2bft(wind_speed)
        print " " + str(wind_speed) + " bft",
        print " " + str(json_out_for['list'][x]['clouds']['all']) + " %",
        print " " + str(json_out_for['list'][x]['weather'][0]['icon']) + "",
@@ -265,8 +265,8 @@ if __name__ == "__main__":
        wind_richtung =  wind_deg2txt(json_out_for['list'][x]['deg'])
        print " " + wind_richtung + "",
        wind_speed = json_out_for['list'][x]['speed']
-       wind_speed = speed_mps2ms(wind_speed)
-       print " " + str(wind_speed) + " m/s",
+       wind_speed = strongth_mps2bft(wind_speed)
+       print " " + str(wind_speed) + " bfts",
        print " " + str(json_out_for['list'][x]['clouds']) + " %",
        print " " + str(json_out_for['list'][x]['weather'][0]['icon']) + "",
        print " " + str(json_out_for['list'][x]['weather'][0]['id']) + "",
