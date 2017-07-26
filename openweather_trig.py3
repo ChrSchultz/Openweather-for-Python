@@ -21,8 +21,8 @@ parser.add_argument('action')
 args = parser.parse_args()
 if args.action == "register":
    name = input("Trigger Ereignis:(temp,wind_speed,wind_dir, humidity, pressure, clouds)")
-   begin = eval input("Beginn:[vor|in,x ](Tagen)"))
-   end = eval (input("Ende: [vor|in,x] (Tagen) Ende > Beginn"))
+   begin = eval(input("Beginn:[vor|in,x ](Tagen)"))
+   end = eval(input("Ende: [vor|in,x] (Tagen) Ende > Beginn"))
    if begin[0] == "vor":
       start_exp = "before"
    else:
@@ -47,15 +47,15 @@ if args.action == "register":
  #---------------------------------------------------------------------
 elif args.action == "alter":
    id = input("trigger_id:")
-   c = input(" Wieviele Alarme? (max 2)")
-   begin= eval([input("Beginn: [vor|in,x]Tagen")
-   end = eval (input("Ende: [vor|in,x] (Tagen) Ende > Beginn"))
+   c = eval(input(" Wieviele Alarme? (max 2)"))
+   begin= eval(input("Beginn: [vor|in,x]Tagen"))
+   end = eval(input("Ende: [vor|in,x] (Tagen) Ende > Beginn"))
    i = 0
    while (i<c+1):
-     trig[i] = eval(input("[name(str), Bedingung(grosser,kleiner,gleich), Wert(int)")
+     trig[i] = eval(input("[name(str), Bedingung(grosser,kleiner,gleich), Wert(int)"))
      name[i] = trig[i][0]	
      cond[i] = trig[i][1]
-     val[i]  = trig[i][2]	
+     amnt[i]  = trig[i][2]	
    if begin[0] == "vor":
       start_exp = "before"
    else:
@@ -68,7 +68,7 @@ elif args.action == "alter":
    trig_start = begin[1]*24*3600
    trig_end = end[1]+24+3600
    ow_put_url = "http://api.openweathermap.org/data/3.0/triggers/" + id + "&appid=" + ow_appid
-   ow_put_data = {'time_period':{'start':{'expression':start_exp, 'amount':trig_start}, 'end':{'expression':end_exp, 'amount':trig_end}},'contitions'[{'name': name[0], 'expression':'$gt', 'amount':amnt[0]},{'name':name[1],'expression':'$gt','amount':amnt[1]} ],
+   ow_put_data = {'time_period':{'start':{'expression':start_exp, 'amount':trig_start}, 'end':{'expression':end_exp, 'amount':trig_end}},'contitions':[{'name': name[0], 'expression':'$gt', 'amount':amnt[0]},{'name':name[1],'expression':'$gt','amount':amnt[1]} ],
    'area':[{'type': 'Point','coordinates':[lat,lon]}]}
    
    req = pool.request("PUT", t_url, body=json.dumps(t_data).encode('utf-8'), headers={Content-type: 'application/json'})
