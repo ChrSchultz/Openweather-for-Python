@@ -78,7 +78,7 @@ elif args.action == "alter":
 	'end':{'expression':end_exp, 'amount':trig_end}}, 'contitions':[{'name': trig[0][0], 
 	'expression':cond1, 'amount':trig[0][2]},{'name':trig[1][0],'expression':cond2,'amount':trig[1][2]} ],
     'area':[{'type': 'Point','coordinates':[ow_lat, ow_long]}]}
-    req = pool.request("PUT", t_url, body=json.dumps(t_data).encode('utf-8'), headers={Content-type: 'application/json'})
+    req = pool.request("PUT", ow_put_url, body=json.dumps(ow_put_data).encode('utf-8'), headers={Content-type: 'application/json'})
     res=req.data
     print(res)
    
