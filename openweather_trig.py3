@@ -33,8 +33,8 @@ if args.action == "register":
         end_exp = "after"
         
    
-    trig_start = begin[1]*24*60*60
-    trig_end = end[1]*24*60*60
+    trig_start = begin[1]*24*60*60*1000
+    trig_end = end[1]*24*60*60*1000
     #print(trig_start, trig_end)
     ow_post_data = {'time_period':{'start':{'expression':start_exp, 'amount':trig_start}, 
 	'end':{'expression':end_exp, 'amount':trig_end}}, 'conditions':[{'name':name, 'expression':'$gt', 'amount':70}],
@@ -71,15 +71,16 @@ elif args.action == "alter":
        cond2 = '$lt'
     else: cond2 = '$eq'
 	
-    trig_start = begin[1]*24*3600
-    trig_end = end[1]+24+60+60
-    ow_put_url = "http://api.openweathermap.org/data/3.0/triggers/" + id + "&appid=" + ow_appid
-    print(ow_put_url)
+    trig_start = begin[1]*24*3600*1000
+    trig_end = end[1]*24*60*60*1000
+    ow_put_url = "http://api.openweathermap.org/data/3.0/triggers/" + id + "?appid=" + ow_appid
+   # print(ow_put_url)
     ow_put_data = {'time_period':{'start':{'expression':start_exp, 'amount':trig_start}, 
 	'end':{'expression':end_exp, 'amount':trig_end}}, 'contitions':[{'name': trig[0][0], 
 	'expression':cond1, 'amount':trig[0][2]},{'name':trig[1][0],'expression':cond2,'amount':trig[1][2]} ],
     'area':[{'type': 'Point','coordinates':[ow_lat, ow_long]}]}
-   # req = pool.request("PUT", ow_put_url, body=json.dumps(ow_put_data).encode('utf-8'), headers={'Content-type': 'application/json'})
-    #res=req.data
-    #print(res)
+    print(ow_put_data)
+    req = pool.request("PUT", ow_put_url, body=json.dumps(ow_put_data).encode('utf-8'), headers={'Content-type': 'application/json'})
+    res=req.data
+    print(res)
    
