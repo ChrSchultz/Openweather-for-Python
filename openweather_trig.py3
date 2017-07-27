@@ -64,12 +64,12 @@ elif args.action == "alter":
        cond1 = '$gt'
     elif trig[0][1] == 'kleiner':
        cond1 = '$lt'
-	else: cond1 = '$eq'
-	if trig[1][1] == 'grosser':
+    else: cond1 = '$eq'
+    if trig[1][1] == 'grosser':
        cond2 = '$gt'
     elif trig[1][1] == 'kleiner':
        cond2 = '$lt'
-	else: cond2 = '$eq'
+    else: cond2 = '$eq'
 	
     trig_start = begin[1]*24*3600
     trig_end = end[1]+24+60+60
