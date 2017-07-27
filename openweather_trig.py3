@@ -66,7 +66,7 @@ elif args.action == "alter":
     ow_put_data = {'time_period':{'start':{'expression':start_exp, 'amount':trig_start}, 
 	'end':{'expression':end_exp, 'amount':trig_end}}, 'contitions':[{'name': trig[0][0], 
 	'expression':'$gt', 'amount':trig[0][2]},{'name':trig[1][0],'expression':'$gt','amount':trig[1][2]} ],
-    'area':[{'type': 'Point','coordinates':[lat, lon]}]}
+    'area':[{'type': 'Point','coordinates':[ow_lat, ow_long]}]}
     req = pool.request("PUT", t_url, body=json.dumps(t_data).encode('utf-8'), headers={Content-type: 'application/json'})
     res=req.data
     print(res)
