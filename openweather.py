@@ -63,7 +63,7 @@ def wind_deg2txt(deg):
 	
 #--------------------------------------------------------------------------------------
 def strongth_mps2bft(speed_mps):
-    speed_ms =round(speed_mps * 0.44704,1)
+    speed_ms =speed_mps
     if speed_ms < 0.3:
        strongth_bft = 0
     elif speed_ms >= 0.3 and speed_ms < 1.6:
