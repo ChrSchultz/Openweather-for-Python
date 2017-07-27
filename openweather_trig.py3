@@ -61,7 +61,7 @@ elif args.action == "alter":
     else:
        end_exp = "after"	 
     trig_start = begin[1]*24*3600
-    trig_end = end[1]+24+3600
+    trig_end = end[1]+24+60+60
     ow_put_url = "http://api.openweathermap.org/data/3.0/triggers/" + id + "&appid=" + ow_appid
     ow_put_data = {'time_period':{'start':{'expression':start_exp, 'amount':trig_start}, 
 	'end':{'expression':end_exp, 'amount':trig_end}}, 'contitions':[{'name': trig[0][0], 
