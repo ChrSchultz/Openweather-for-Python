@@ -83,4 +83,10 @@ elif args.action == "alter":
     req = pool.request("PUT", ow_put_url, body=json.dumps(ow_put_data).encode('utf-8'), headers={'Content-type': 'application/json'})
     res=req.data
     print(res)
-   
+  #-------------------------------------
+if args.action == "delete":
+     id = eval(input("id:"))
+     ow_url = "http://api.openweathermap.org/data/3.0/triggers/" + id + "?appid=" + ow_appid
+     req = pool.request("DELTE", ow_url)
+     print(req.data)
+  
